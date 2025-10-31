@@ -3,10 +3,10 @@ import datetime
 
 # словарь email
 email = {
-    "subject": "   ",
-    "from": "   alex@business.net ",
-    "to": "   hr@company.ru ",
-    "body": "Hi HR,\nPlease find attached my updated CV.\nThanks!"
+    "subject": " Weekend plans ",
+    "from": "  katya_yan@yandex.ru ",
+    "to": "  friend@mail.ru ",
+    "body": "\tHey!\nLet's go hiking this weekend.\nBring snacks!\n"
 }
 
 
