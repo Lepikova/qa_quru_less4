@@ -3,11 +3,22 @@ import datetime
 
 # словарь email
 email = {
-    "subject": "  Quarterly Report  ",
-    "from": "  Alice.Cooper@Company.ru ",
-    "to": "   bob_smith@Gmail.com   ",
-    "body": "Hello Bob,\n\tHere is the quarterly report.\n\tPlease review and let me know your feedback.\n\nBest,\nAlice"
+    "subject": "   ",
+    "from": "   alex@business.net ",
+    "to": "   hr@company.ru ",
+    "body": "Hi HR,\nPlease find attached my updated CV.\nThanks!"
 }
+
+
+# Создаем списки доменов
+personal_domains = [
+    'gmail.com', 'list.ru', 'yahoo.com', 'outlook.com', 'hotmail.com',
+    'icloud.com', 'yandex.ru', 'mail.ru', 'list.ru', 'bk.ru', 'inbox.ru'
+]
+corporate_domains = [
+    'company.ru', 'corporation.com', 'university.edu',
+    'organization.org', 'company.org', 'business.net'
+]
 
 
 # добавляем дату отправки
@@ -18,7 +29,6 @@ email["send_date"] = send_date
 # нормализация email
 email["from"] = email["from"].strip().lower()
 email["to"] = email["to"].strip().lower()
-email["subject"] = email["subject"].strip()
 
 
 # извлечение логина и домена отправителя
@@ -35,17 +45,6 @@ short_body = short_body[0:10] + '...'
 email["short_body"] = short_body
 
 
-# Создаем списки доменов
-personal_domains = [
-    'gmail.com', 'list.ru', 'yahoo.com', 'outlook.com', 'hotmail.com',
-    'icloud.com', 'yandex.ru', 'mail.ru', 'list.ru', 'bk.ru', 'inbox.ru'
-]
-corporate_domains = [
-    'company.ru', 'corporation.com', 'university.edu',
-    'organization.org', 'company.org', 'business.net'
-]
-
-
 #Убираем пересечения доменов
 personal_set = set(personal_domains)
 corporate_set = set(corporate_domains)
@@ -58,8 +57,8 @@ corporate_domains = list(uniq_corporate)
 
 
 # Проверяем «корпоративность» отправителя
-if domen in corporate_domains:
-    is_corporate = True
+is_corporate = domen in corporate_domains
+
 
 print("2. Проверяем «корпоративность» отправителя")
 print(f"Domen is corporated: {is_corporate}")
@@ -81,3 +80,33 @@ email["sent_text"] = sent_text
 
 print("3. Сформируем текст отправленного письма")
 print(email["sent_text"])
+
+#Рассчитаем количество страниц печати
+text_for_print = email["sent_text"]
+length = len(text_for_print)
+pages = (length + 499) // 500
+
+print(f"4. Количество страниц: {pages}")
+
+
+#Проверка пустоты темы и тела письма
+is_subject_empty = not email["subject"]
+is_body_empty = not email["body"]
+
+print(f"5. Тема пуста: {is_subject_empty}")
+print(f"6. Тело пустое: {is_body_empty}")
+
+
+#Создаем маску email
+masked_form = login[:2] + "***@" + domen
+email["masked_form"] = masked_form
+
+print(f"7. Маска email: {email["masked_form"]}")
+
+
+#Удаляем лишние домены
+personal_domains.remove("list.ru")
+personal_domains.remove("bk.ru")
+
+print(f"8. Персональные домены после чистки: {personal_domains}")
+
