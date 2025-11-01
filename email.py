@@ -3,22 +3,11 @@ import datetime
 
 # словарь email
 email = {
-    "subject": " Weekend plans ",
-    "from": "  katya_yan@yandex.ru ",
-    "to": "  friend@mail.ru ",
-    "body": "\tHey!\nLet's go hiking this weekend.\nBring snacks!\n"
+    "subject": "Project collaboration",
+    "from": " partner@organization.org ",
+    "to": "  lead_dev@icloud.com ",
+    "body": "Hello,\nWe are interested in a partnership.\tPlease reply soon.\nRegards,\nTeam"
 }
-
-
-# Создаем списки доменов
-personal_domains = [
-    'gmail.com', 'list.ru', 'yahoo.com', 'outlook.com', 'hotmail.com',
-    'icloud.com', 'yandex.ru', 'mail.ru', 'list.ru', 'bk.ru', 'inbox.ru'
-]
-corporate_domains = [
-    'company.ru', 'corporation.com', 'university.edu',
-    'organization.org', 'company.org', 'business.net'
-]
 
 
 # добавляем дату отправки
@@ -35,39 +24,44 @@ email["to"] = email["to"].strip().lower()
 login = email["from"].split("@")[0]
 domen = email["from"].split("@")[1]
 print("1. Извлечение логина и домена отправителя")
-print(login)
-print(domen)
+print(f"login: {login}")
+print(f"domen: {domen}")
 
 
 # Создание сокращённой версии текста
-short_body = email["body"]
-short_body = short_body[0:10] + '...'
-email["short_body"] = short_body
+email["short_body"] = email["body"][:10] + '...'
 
+
+# Создаем списки доменов
+personal_domains = [
+    'gmail.com', 'list.ru', 'yahoo.com', 'outlook.com', 'hotmail.com',
+    'icloud.com', 'yandex.ru', 'mail.ru', 'list.ru', 'bk.ru', 'inbox.ru', 'inbox.ru'
+]
+corporate_domains = [
+    'company.ru', 'corporation.com', 'university.edu',
+    'organization.org', 'company.org', 'business.net', 'business.net'
+]
+personal_domains = list(set(personal_domains))
+corporate_domains = list(set(corporate_domains))
+print(f"personal_domains: {personal_domains}")
+print(f"corporate_domains: {corporate_domains}")
 
 #Убираем пересечения доменов
-personal_set = set(personal_domains)
-corporate_set = set(corporate_domains)
 
-uniq_personal = personal_set - corporate_set
-uniq_corporate = corporate_set - personal_set
-
-personal_domains = list(uniq_personal)
-corporate_domains = list(uniq_corporate)
+common_domains = set(personal_domains) & set (corporate_domains)
+if common_domains:
+    print(f"common_domains: {common_domains}")
 
 
 # Проверяем «корпоративность» отправителя
 is_corporate = domen in corporate_domains
-
 
 print("2. Проверяем «корпоративность» отправителя")
 print(f"Domen is corporated: {is_corporate}")
 
 
 # Собираем «чистый» текст сообщения
-clean_body = email["body"]
-clean_body = clean_body.replace("\t", " ").replace("\n", " ")
-email["clean_body"] = clean_body
+email["clean_body"] = email["body"].replace("\t", " ").replace("\n", " ")
 
 
 #Сформируем текст отправленного письма
@@ -90,8 +84,8 @@ print(f"4. Количество страниц: {pages}")
 
 
 #Проверка пустоты темы и тела письма
-is_subject_empty = not email["subject"]
-is_body_empty = not email["body"]
+is_subject_empty = not email["subject"].strip()
+is_body_empty = not email["body"].strip()
 
 print(f"5. Тема пуста: {is_subject_empty}")
 print(f"6. Тело пустое: {is_body_empty}")
